@@ -12,8 +12,8 @@ from fabric.api import cd, local
 
 RUN_DIR = os.getcwd()
 GITHUB = {
-    'user': 'mindinpanic',
-    'password': 'Vl_d11m1p',
+    'user': '',
+    'password': '',
     'urls': {
         'base': 'https://api.github.com',
         'pull_request': '/repos/django-stars/mmp/pulls'
