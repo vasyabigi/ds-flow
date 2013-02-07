@@ -10,19 +10,40 @@ from requests import get, post
 
 from fabric.api import cd, local
 
+try:
+    from Skype4Py import Skype
+    SKYPE_ENABLED = True
+except ImportError:
+    SKYPE_ENABLED = False
+
+from local_settings import *
+
+
 RUN_DIR = os.getcwd()
 GITHUB = {
-    'user': '',
-    'password': '',
+    'user': GITHUB_USER,
+    'password': GITHUB_PASS,
     'urls': {
         'base': 'https://api.github.com',
         'pull_request': '/repos/django-stars/mmp/pulls'
     }
 }
+PULL_REQUEST_NOTIFICATION_RECEIVERS = NOTIFICATION_RECEIVERS
+PULL_REQUEST_NOTIFICATION_MESSAGE = u"New pull request"
 
 
 get = partial(get, auth=(GITHUB['user'], GITHUB['password']))
 post = partial(post, auth=(GITHUB['user'], GITHUB['password']))
+
+
+def skype_notify():
+    client = Skype()
+    client.Attach()
+    for receiver in PULL_REQUEST_NOTIFICATION_RECEIVERS:
+        client.SendMessage(
+            receiver,
+            PULL_REQUEST_NOTIFICATION_MESSAGE
+        )
 
 
 def git_checkout(where):
@@ -89,7 +110,9 @@ def git_pull_request():
         raw_input("Pull request title: ")
         or git_collect_commits_messages()
     )
-    pull_request_title = ", ".join([branch_name.capitalize(), pull_request_title])
+    pull_request_title = ", ".join(
+        [branch_name.capitalize(), pull_request_title]
+    )
     data = {
         "title": pull_request_title,
         "body": "",
@@ -101,6 +124,9 @@ def git_pull_request():
     url = "".join([GITHUB['urls']['base'], GITHUB['urls']['pull_request']])
     response = post(url=url, data=json.dumps(data))
     assert response.status_code == 201
+
+    if SKYPE_ENABLED:
+        skype_notify()
 
 
 def migrate(app_name=None):
@@ -166,6 +192,9 @@ def finish_task():
         git_rebase()
 
         branch_name = git_get_branch_name()
+
+        # don't be stupid, check migration before send
+        migrate()
 
         git_push(branch_name)
         git_pull_request()
