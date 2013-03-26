@@ -1,2 +1,2 @@
 local_settings.py
-*.p[co]
+*.py[co]
