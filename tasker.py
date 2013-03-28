@@ -28,18 +28,17 @@ try:
 except ImportError:
     SETTINGS_ENABLED = False
 
+from local_settings import GITHUB_PASS, GITHUB_USER, NOTIFICATION_RECEIVERS
 
 GITHUB = {
-    'user': 'mindinpanic',
-    'password': 'Vl_d11m1p',
+    'user': GITHUB_USER,
+    'password': GITHUB_PASS,
     'urls': {
         'base': 'https://api.github.com',
         'pull_request': '/repos/django-stars/mmp/pulls'
     }
 }
-PULL_REQUEST_NOTIFICATION_RECEIVERS = [
-    "rootart1402"
-]
+PULL_REQUEST_NOTIFICATION_RECEIVERS = NOTIFICATION_RECEIVERS
 PULL_REQUEST_NOTIFICATION_MESSAGE = u"Yo, bro, check this out %s, plz"
 
 
