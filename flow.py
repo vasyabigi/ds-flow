@@ -1,17 +1,19 @@
-"""Workflow helper.
-
+"""
 Usage:
     flow <command> [options]
 
 Options:
-    -f              Force
     -m MESSAGE      Command message
+    -f              Force
+    -t NUMBER       Task number
 
 List of availible commands:
-   commit       Add file contents to the index
-   push         Update remote refs along with associated objects
-   finish       Finish current task
-   reset        Reset current branch. Update with last upstream changes.
+   commit           Add file contents to the index
+   push             Update remote refs along with associated objects
+   pull_request     Send pull request to github
+   change           Go to other branch. Start working on new task
+   finish           Finish current task
+   reset            Reset current branch. Update with last upstream changes
 
 
 """
