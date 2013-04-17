@@ -4,8 +4,8 @@ Usage:
 
 Options:
     -m MESSAGE      Command message
-    -f              Force
-    -t NUMBER       Task number
+    --amend         Commit with amend
+    -f              Force push
 
 List of availible commands:
    commit           Add file contents to the index
@@ -19,7 +19,7 @@ List of availible commands:
 """
 import os
 from utils import ALIAS
-from fabric.api import local
+from fabric.api import local, settings, hide
 
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
@@ -44,7 +44,8 @@ def run_command(arguments):
     if additional_args:
         command += ":%s" % additional_args
 
-    local(command)
+    with settings(hide('running'), warn_only=True):
+        local(command)
 
 
 if __name__ == '__main__':

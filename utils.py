@@ -7,7 +7,8 @@ from settings import GITHUB
 
 ALIAS = {
     '-f': 'force',
-    '-m': 'message'
+    '-m': 'message',
+    '--amend': 'amend'
 }
 
 post = partial(post, auth=(GITHUB['user'], GITHUB['password']))
