@@ -26,7 +26,7 @@ def commit(message=None, amend=False):
         while not message:
             message = prompt(green("Enter commit message: "))
 
-        command += ' -a -u -m "%s"' % get_commit_message(message=message)
+        command += ' -m "%s"' % get_commit_message(message=message)
 
     local(command)
 
@@ -55,10 +55,10 @@ def push(force=False):
 def pull_request(message=None):
     print(cyan("Sending pull request..."))
 
-    title = prompt(
-        'Enter pull request title or use default on <Enter>:',
-        default=get_commit_message(message=message)
-    )
+    if confirm(green('Default message: %s' % get_commit_message(message=message))):
+        title = get_commit_message(message=message)
+    else:
+        title = get_commit_message(message=prompt(green("Enter message: ")))
 
     data = {
         "title": title,
@@ -74,7 +74,7 @@ def pull_request(message=None):
 
 @task
 def reset():
-    local("git fetch upstream master")
+    local("git fetch upstream")
     local("git reset --hard upstream/master")
 
 
@@ -83,9 +83,9 @@ def change(number):
     with quiet():
         local("git branch task-%s" % number)
         local("git checkout task-%s" % number)
-        print(cyan("Already on %s" % get_branch_name()))
+        print(cyan("Changed to %s" % get_branch_name()))
 
-    if confirm(cyan("Do you want to reset current branch?")):
+    if confirm(green("Do you want to reset current branch?")):
         reset()
         print(cyan("Got last changes from upstream."))
 
