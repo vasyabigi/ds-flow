@@ -79,6 +79,12 @@ def reset():
 
 
 @task
+def rebase():
+    local("git fetch upstream")
+    local("git rebase upstream/master")
+
+
+@task
 def change(number):
     with quiet():
         local("git branch task-%s" % number)

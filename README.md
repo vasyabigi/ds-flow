@@ -12,7 +12,6 @@ Installation
 
 Usage
 =====
-- flow <command> [options]
 - flow change:2000
 - flow ci -m "Message"
 - flow finish -m "Message"
