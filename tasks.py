@@ -12,8 +12,15 @@ from utils import get_commit_message, get_branch_name, post
 
 @task(alias="ci")
 def commit(message=None, amend=False):
+    git_status = local('git status --short', capture=True)
+
+    if not git_status:
+        print(cyan('Nothing to commit.'))
+        return
+
     print(cyan('Review git status:'))
-    local('git status')
+
+    local('git status --short')
     prompt(cyan('Press <Enter> to continue or <Ctrl+C> to cancel.'))
 
     # Default command
@@ -85,11 +92,11 @@ def rebase():
 
 
 @task
-def change(number):
+def change(number, prefix="task-"):
     with quiet():
-        local("git branch task-%s" % number)
-        local("git checkout task-%s" % number)
-        print(cyan("Changed to %s" % get_branch_name()))
+        local("git branch %s%s" % (prefix, number))
+        local("git checkout %s%s" % (prefix, number))
+        print(cyan("Changed to %s." % get_branch_name()))
 
     if confirm(green("Do you want to reset current branch?")):
         reset()
@@ -101,3 +108,8 @@ def finish(message=None, force=False):
     commit(message=message)
     push(force=force)
     pull_request(message=message)
+
+
+@task
+def fix():
+    change(number="quick-fix", prefix="")
