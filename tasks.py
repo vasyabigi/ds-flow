@@ -11,7 +11,10 @@ from utils import get_commit_message, get_branch_name, post
 
 
 @task(alias="ci")
-def commit(message=None, amend=False):
+def commit(message=None, amend=False, need_rebase=False):
+    if need_rebase:
+        rebase()
+
     git_status = local('git status --short', capture=True)
 
     if not git_status:
@@ -87,8 +90,10 @@ def reset():
 
 @task
 def rebase():
+    print(cyan("Rebasing..."))
     local("git fetch upstream")
     local("git rebase upstream/master")
+    print(cyan("Rebase finished."))
 
 
 @task
@@ -104,8 +109,8 @@ def change(number, prefix="task-"):
 
 
 @task
-def finish(message=None, force=False):
-    commit(message=message)
+def finish(message=None, force=False, need_rebase=False):
+    commit(message=message, need_rebase=need_rebase)
     push(force=force)
     pull_request(message=message)
 

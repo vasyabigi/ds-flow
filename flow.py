@@ -6,6 +6,7 @@ Options:
     -m MESSAGE      Command message
     --amend         Commit with amend
     -f              Force push
+    -r              Rebase before commiting
 
 List of availible commands:
    commit           Add file contents to the index
