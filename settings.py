@@ -1,4 +1,4 @@
-from local_settings import GITHUB_USER, GITHUB_PASS, UPSTREAM_ONLY
+from local_settings import GITHUB_USER, GITHUB_PASS
 
 GITHUB = {
     'user': GITHUB_USER,
@@ -7,3 +7,7 @@ GITHUB = {
         'pull_request': 'https://api.github.com/repos/django-stars/mmp/pulls'
     }
 }
+
+UPSTREAM_ONLY = False
+
+from local_settings import *
