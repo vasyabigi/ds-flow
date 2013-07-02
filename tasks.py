@@ -3,7 +3,7 @@ from __future__ import with_statement
 import json
 
 from fabric.api import local, prompt, task, quiet
-from fabric.colors import green, cyan
+from fabric.colors import green, cyan, red
 from fabric.contrib.console import confirm
 
 from settings import GITHUB, UPSTREAM_ONLY
@@ -38,12 +38,15 @@ def commit(message=None, amend=False, need_rebase=False):
 
         command += ' -m "%s"' % get_commit_message(message=message)
 
-    local(command)
-
-    if amend:
-        print(cyan("Commited with amend."))
+    if not local("git diff --cached", capture=True):
+        print(red("Your commit is empty. Please add something and try again."))
     else:
-        print(cyan("Commited with message: " + get_commit_message(message=message)))
+        local(command)
+
+        if amend:
+            print(cyan("Commited with amend."))
+        else:
+            print(cyan("Commited with message: " + get_commit_message(message=message)))
 
 
 @task

@@ -30,8 +30,8 @@ def get_fab_args(arguments):
     args = []
     for key, value in arguments.iteritems():
         if value:
-            value = "'%s'" % value if isinstance(value, str) else value
-            args.append("%s=%s" % (ALIAS.get(key, key), value))
+            value = '"%s"' % value if isinstance(value, str) else value
+            args.append("%s=%s" % (ALIAS.get(key, key), value.replace(",", "\,")))
 
     return ",".join(args)
 
