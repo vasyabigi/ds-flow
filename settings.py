@@ -1,4 +1,5 @@
-from local_settings import GITHUB_USER, GITHUB_PASS
+GITHUB_USER = ''
+GITHUB_PASS = ''
 
 GITHUB = {
     'user': GITHUB_USER,
