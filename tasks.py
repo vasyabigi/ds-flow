@@ -6,7 +6,7 @@ from fabric.api import local, prompt, task, quiet
 from fabric.colors import green, cyan, red
 from fabric.contrib.console import confirm
 
-from settings import GITHUB, UPSTREAM_ONLY
+from settings import GITHUB, UPSTREAM_ONLY, TASK_PREFIX
 from utils import get_commit_message, get_branch_name, post
 
 
@@ -103,7 +103,7 @@ def rebase():
 
 
 @task
-def change(number, prefix="task-"):
+def change(number, prefix=TASK_PREFIX):
     with quiet():
         local("git branch %s%s" % (prefix, number))
         local("git checkout %s%s" % (prefix, number))

@@ -9,6 +9,8 @@ GITHUB = {
     }
 }
 
+TASK_PREFIX = "task-"
+
 UPSTREAM_ONLY = False
 
 from local_settings import *
