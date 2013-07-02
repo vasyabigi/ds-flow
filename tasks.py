@@ -6,7 +6,7 @@ from fabric.api import local, prompt, task, quiet
 from fabric.colors import green, cyan
 from fabric.contrib.console import confirm
 
-from settings import GITHUB
+from settings import GITHUB, UPSTREAM_ONLY
 from utils import get_commit_message, get_branch_name, post
 
 
@@ -50,7 +50,10 @@ def commit(message=None, amend=False, need_rebase=False):
 def push(force=False):
     print(cyan("Pushing..."))
 
-    command = 'git push origin %s' % get_branch_name()
+    if UPSTREAM_ONLY:
+        command = 'git push upstream %s:master' % get_branch_name()
+    else:
+        command = 'git push origin %s' % get_branch_name()
 
     # Check if force commit is necessary
     if force:
@@ -112,7 +115,8 @@ def change(number, prefix="task-"):
 def finish(message=None, force=False, need_rebase=False):
     commit(message=message, need_rebase=need_rebase)
     push(force=force)
-    pull_request(message=message)
+    if not UPSTREAM_ONLY:
+        pull_request(message=message)
 
 
 @task

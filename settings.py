@@ -7,3 +7,5 @@ GITHUB = {
         'pull_request': 'https://api.github.com/repos/django-stars/mmp/pulls'
     }
 }
+
+UPSTREAM_PUSH = False
