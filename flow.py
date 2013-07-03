@@ -29,13 +29,13 @@ from settings import GIT_ADD_FIRST, GIT_REBASE_FIRST
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 
-def get_fab_args(arguments, command_value):
+def get_fab_args(command_name, arguments, command_value):
     final_args = []
 
-    if GIT_ADD_FIRST:
+    if GIT_ADD_FIRST and command_name in ['commit', 'finish']:
         arguments['-a'] = True
 
-    if GIT_REBASE_FIRST:
+    if GIT_REBASE_FIRST and command_name in ['finish']:
         arguments['-r'] = True
 
     for key, value in arguments.iteritems():
@@ -55,7 +55,7 @@ def run_command(arguments):
 
     command = "fab -f %s/tasks.py %s" % (PROJECT_PATH, command_name)
 
-    additional_args = get_fab_args(arguments, value)
+    additional_args = get_fab_args(command_name, arguments, value)
     if additional_args:
         command += ":%s" % additional_args
 
