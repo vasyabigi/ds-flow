@@ -15,7 +15,7 @@ Installation
 Usage
 =====
 
-* `flow change:2000` - creates new branch with name "task-2000" and ask about reseting to last changes from upstream.
+* `flow change:2000` or `flow change 2000` - creates new branch with name "task-2000" and ask about reseting to last changes from upstream.
 * `flow ci -m "Message"` or `flow commit -m "Mesasge"` creates commit with message "Task-2000, Message".
 * `flow push` - push commit to origin remote, task-2000 branch.
 * `flow pr` - creates pull-request.
