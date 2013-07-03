@@ -11,6 +11,8 @@ Installation
 Usage
 =====
 
+![](https://www.evernote.com/shard/s46/sh/0567535b-937d-4e04-81dd-22902e3c64e8/ee0c279d30d7a69621d229cddd72d2fc/res/9690c864-18e7-45ef-9b7c-3393c14603ab/skitch.png)
+
 * `flow change:2000` or `flow change 2000` - creates new branch with name "task-2000" and ask about reseting to last changes from upstream.
 * `flow ci -m "Message"` or `flow commit -m "Mesasge"` creates commit with message "Task-2000, Message".
 * `flow push` - push commit to origin remote, task-2000 branch.
