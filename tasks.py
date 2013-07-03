@@ -51,6 +51,9 @@ def commit(message=None, amend=False, add_first=False):
 
 @task
 def push(force=False, need_rebase=False):
+    if need_rebase:
+        rebase()
+
     print(cyan("Pushing..."))
 
     if UPSTREAM_ONLY:
@@ -61,9 +64,6 @@ def push(force=False, need_rebase=False):
     # Check if force commit is necessary
     if force:
         command += " --force"
-
-    if need_rebase:
-        rebase()
 
     local(command)
 
