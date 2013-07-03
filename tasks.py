@@ -50,7 +50,7 @@ def commit(message=None, amend=False, add_first=False):
 
 
 @task
-def push(force=False):
+def push(force=False, need_rebase=False):
     print(cyan("Pushing..."))
 
     if UPSTREAM_ONLY:
@@ -61,6 +61,9 @@ def push(force=False):
     # Check if force commit is necessary
     if force:
         command += " --force"
+
+    if need_rebase:
+        rebase()
 
     local(command)
 
@@ -118,10 +121,7 @@ def change(number, prefix=TASK_PREFIX):
 def finish(message=None, force=False, need_rebase=False, add_first=False):
     commit(message=message, add_first=add_first)
 
-    if need_rebase:
-        rebase()
-
-    push(force=force)
+    push(force=force, need_rebase=False)
 
     if not UPSTREAM_ONLY:
         pull_request(message=message)

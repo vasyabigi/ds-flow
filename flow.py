@@ -35,7 +35,7 @@ def get_fab_args(command_name, arguments, command_value):
     if GIT_ADD_FIRST and command_name in ['commit', 'finish']:
         arguments['-a'] = True
 
-    if GIT_REBASE_FIRST and command_name in ['finish']:
+    if GIT_REBASE_FIRST and command_name in ['finish', 'push']:
         arguments['-r'] = True
 
     for key, value in arguments.iteritems():
