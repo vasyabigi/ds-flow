@@ -11,15 +11,15 @@ from utils import get_commit_message, get_branch_name, post
 
 
 @task(alias="ci")
-def commit(message=None, amend=False, need_rebase=False):
-    if need_rebase:
-        rebase()
-
+def commit(message=None, amend=False, need_rebase=False, add_first=False):
     git_status = local('git status --short', capture=True)
 
     if not git_status:
         print(cyan('Nothing to commit.'))
         return
+
+    if add_first:
+        local("git add .")
 
     print(cyan('Review git status:'))
 
@@ -47,6 +47,9 @@ def commit(message=None, amend=False, need_rebase=False):
             print(cyan("Commited with amend."))
         else:
             print(cyan("Commited with message: " + get_commit_message(message=message)))
+
+    if need_rebase:
+        rebase()
 
 
 @task
@@ -115,8 +118,8 @@ def change(number, prefix=TASK_PREFIX):
 
 
 @task
-def finish(message=None, force=False, need_rebase=False):
-    commit(message=message, need_rebase=need_rebase)
+def finish(message=None, force=False, need_rebase=False, add_first=False):
+    commit(message=message, need_rebase=need_rebase, add_first=add_first)
     push(force=force)
     if not UPSTREAM_ONLY:
         pull_request(message=message)

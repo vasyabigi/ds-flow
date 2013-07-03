@@ -8,6 +8,7 @@ Options:
     --amend         Commit with amend
     -f              Force push
     -r              Rebase before commiting
+    -a              Make git add . before commiting
 
 List of availible commands:
     commit           Add file contents to the index
@@ -22,6 +23,7 @@ List of availible commands:
 import os
 from utils import ALIAS
 from fabric.api import local, settings, hide
+from settings import GIT_ADD_FIRST, GIT_REBASE_FIRST
 
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
@@ -29,6 +31,13 @@ PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 def get_fab_args(arguments, command_value):
     final_args = []
+
+    if GIT_ADD_FIRST:
+        arguments['-a'] = True
+
+    if GIT_REBASE_FIRST:
+        arguments['-r'] = True
+
     for key, value in arguments.iteritems():
         if value:
             value = '"%s"' % value.replace(",", "\,") if isinstance(value, str) else value

@@ -13,4 +13,7 @@ TASK_PREFIX = "task-"
 
 UPSTREAM_ONLY = False
 
+GIT_ADD_FIRST = False
+GIT_REBASE_FIRST = False
+
 from local_settings import *
