@@ -7,6 +7,7 @@ config_file = os.path.join(user_dir, '.flow')
 class ConfigurationException(Exception):
     pass
 
+
 def get_config_files():
     env_config_file = os.environ.get('FLOW_CONFIG_FILE', False)
     if env_config_file:

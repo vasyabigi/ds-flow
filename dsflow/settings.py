@@ -1,13 +1,6 @@
 GITHUB_USER = ''
 GITHUB_PASS = ''
-
-GITHUB = {
-    'user': GITHUB_USER,
-    'password': GITHUB_PASS,
-    'urls': {
-        'pull_request': 'https://api.github.com/repos/django-stars/mmp/pulls'
-    }
-}
+GITHUB_PULL_REQUEST_URL = 'https://api.github.com/repos/django-stars/mmp/pulls'
 
 TASK_PREFIX = "task-"
 
@@ -17,3 +10,11 @@ GIT_ADD_FIRST = False
 GIT_REBASE_FIRST = False
 
 from local_settings import *
+
+GITHUB = {
+    'user': GITHUB_USER,
+    'password': GITHUB_PASS,
+    'urls': {
+        'pull_request': GITHUB_PULL_REQUEST_URL
+    }
+}
