@@ -10,6 +10,12 @@ Installation
 $ python setup.py install
 ```
 
+or
+
+```bash
+$ pip install -e git+https://github.com/vasyabigi/ds-flow#egg=dsflow
+```
+
 And make your own config file here: `~/.flow`. Example:
 
 ```bash
