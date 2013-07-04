@@ -5,8 +5,22 @@ This project is a simple fabric script. It makes usual github workflow easy.
 
 Installation
 ============
-  $ python setup.py install
 
+```bash
+$ python setup.py install
+```
+
+And make your own config file here: `~/.flow`. Example:
+
+```bash
+[global]
+GITHUB_USER:username
+GITHUB_PASS:secret
+UPSTREAM_ONLY:False
+GIT_ADD_FIRST:True
+GIT_REBASE_FIRST:True
+GITHUB_PULL_REQUEST_URL:https://api.github.com/repos/django-stars/repo/pulls
+```
 
 Usage
 =====
