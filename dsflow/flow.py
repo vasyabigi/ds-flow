@@ -63,7 +63,7 @@ def run_command(arguments):
         local(command)
 
 
-if __name__ == '__main__':
+def main():
     from docopt import docopt
     arguments = docopt(__doc__, version='Workflow helper 0.0.1')
     run_command(arguments)

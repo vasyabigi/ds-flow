@@ -1,2 +1,5 @@
+.DS_Store
 *.py[cod]
-local_settings.py
+*egg-info
+build/
+dist/

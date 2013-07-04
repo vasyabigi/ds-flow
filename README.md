@@ -5,15 +5,13 @@ This project is a simple fabric script. It makes usual github workflow easy.
 
 Installation
 ============
-1. pip install -r requirements.txt
-2. cp local_settings.py.example local_settings.py
-3. Configure your local_settings.py
-4. Update work shell configuration with alias (add it to ~/.basrc or ~/.zshrc):
-    - alias flow="python PATH_TO_FILE/flow.py"
+  $ python setup.py install
 
 
 Usage
 =====
+
+![](https://www.evernote.com/shard/s46/sh/0567535b-937d-4e04-81dd-22902e3c64e8/ee0c279d30d7a69621d229cddd72d2fc/res/9690c864-18e7-45ef-9b7c-3393c14603ab/skitch.png)
 
 * `flow change:2000` or `flow change 2000` - creates new branch with name "task-2000" and ask about reseting to last changes from upstream.
 * `flow ci -m "Message"` or `flow commit -m "Mesasge"` creates commit with message "Task-2000, Message".
@@ -21,6 +19,20 @@ Usage
 * `flow pr` - creates pull-request.
 * `flow finish -m "Message"` - makes commit, push to branch and create pull-request.
 * `flow reset` - take last changes from upstream and applies it to current branch.
+
+
+Similar projects
+================
+
+* [gitflow](https://github.com/nvie/gitflow)
+* [legit](http://www.git-legit.org/)
+
+
+Authors
+=======
+* Volodymyr Pavlenko [@mindinpanic](https://github.com/mindinpanic)
+* Vasyl Stanislavchuk [@vasyabigi](https://github.com/vasyabigi)
+* Vasyl Dizhak [@rootart](http://github.com/rootart)
 
 We can do all this staff more automatically.
 Contributions are welcome!
