@@ -10,7 +10,8 @@ ALIAS = {
     '-m': 'message',
     '--amend': 'amend',
     '-r': 'need_rebase',
-    '-a': 'add_first'
+    '-a': 'add_first',
+    '-b': 'base'
 }
 
 post = partial(post, auth=(GITHUB['user'], GITHUB['password']))

@@ -9,6 +9,7 @@ Options:
     -f              Force push
     -r              Rebase before commiting
     -a              Make git add . before commiting
+    -b BRANCH       Specify base, where to send pull request. Default: master
 
 List of availible commands:
     commit           Add file contents to the index

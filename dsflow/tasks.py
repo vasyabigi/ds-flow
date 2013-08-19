@@ -71,7 +71,7 @@ def push(force=False, need_rebase=False):
 
 
 @task(alias='pr')
-def pull_request(message=None):
+def pull_request(message=None, base="master"):
     print(cyan("Sending pull request..."))
 
     if confirm(green('Default message: %s' % get_commit_message(message=message))):
@@ -83,7 +83,7 @@ def pull_request(message=None):
         "title": title,
         "body": "",
         "head": "{user}:{branch}".format(user=GITHUB['user'], branch=get_branch_name()),
-        "base": "master"
+        "base": base
     }
 
     response = post(url=GITHUB['urls']['pull_request'], data=json.dumps(data))
@@ -118,13 +118,13 @@ def change(number, prefix=TASK_PREFIX):
 
 
 @task
-def finish(message=None, force=False, need_rebase=False, add_first=False):
+def finish(message=None, force=False, need_rebase=False, add_first=False, base="master"):
     commit(message=message, add_first=add_first)
 
     push(force=force, need_rebase=False)
 
     if not UPSTREAM_ONLY:
-        pull_request(message=message)
+        pull_request(message=message, base=base)
 
 
 @task
