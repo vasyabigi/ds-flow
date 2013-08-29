@@ -6,7 +6,7 @@ from fabric.api import local, prompt, task, quiet
 from fabric.colors import green, cyan, red
 from fabric.contrib.console import confirm
 
-from settings import GITHUB, UPSTREAM_ONLY, TASK_PREFIX
+from settings import GITHUB, UPSTREAM_ONLY, TASK_PREFIX, GIT_REMOTE_NAME
 from utils import get_commit_message, get_branch_name, post
 
 
@@ -50,14 +50,14 @@ def commit(message=None, amend=False, add_first=False):
 
 
 @task
-def push(force=False, need_rebase=False):
+def push(force=False, need_rebase=False, base="master"):
     if need_rebase:
         rebase()
 
     print(cyan("Pushing..."))
 
     if UPSTREAM_ONLY:
-        command = 'git push upstream %s:master' % get_branch_name()
+        command = 'git push %s %s:%s' % (GIT_REMOTE_NAME, get_branch_name(), base)
     else:
         command = 'git push origin %s' % get_branch_name()
 
@@ -92,16 +92,16 @@ def pull_request(message=None, base="master"):
 
 
 @task
-def reset():
-    local("git fetch upstream")
-    local("git reset --hard upstream/master")
+def reset(base="master"):
+    local("git fetch %s" % GIT_REMOTE_NAME)
+    local("git reset --hard %s/%s" % (GIT_REMOTE_NAME, base))
 
 
 @task
-def rebase():
+def rebase(base="master"):
     print(cyan("Rebasing..."))
-    local("git fetch upstream")
-    local("git rebase upstream/master")
+    local("git fetch %s" % GIT_REMOTE_NAME)
+    local("git rebase %s/%s" % (GIT_REMOTE_NAME, base))
     print(cyan("Rebase finished."))
 
 
@@ -114,7 +114,7 @@ def change(number, prefix=TASK_PREFIX):
 
     if confirm(green("Do you want to reset current branch?")):
         reset()
-        print(cyan("Got last changes from upstream."))
+        print(cyan("Got last changes from %s." % GIT_REMOTE_NAME))
 
 
 @task

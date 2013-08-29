@@ -7,19 +7,19 @@ setup(
     author_email='vasyl.stanislavchuk@djangostars.com',
     entry_points={
         'console_scripts':
-            ['flow = dsflow.flow:main',]
-        },
+            ['flow = dsflow.flow:main', ]
+    },
     packages=['dsflow'],
-    url = 'https://github.com/vasyabigi/ds-flow',
+    url='https://github.com/vasyabigi/ds-flow',
     license='BSD',
-    description = 'Add easy workflow for git/github branching system',
+    description='Add easy workflow for git/github branching system',
     long_description=open('README.md').read(),
-    install_requires = [
+    install_requires=[
         'fabric',
         'docopt',
         'requests'
     ],
-    classifiers = [
+    classifiers=[
         'Development Status :: Alpha',
         'Environment :: Console',
         'Intended Audience :: Developers',
