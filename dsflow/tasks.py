@@ -106,14 +106,14 @@ def rebase(base="master"):
 
 
 @task
-def change(number, prefix=TASK_PREFIX):
+def change(number, prefix=TASK_PREFIX, base="master"):
     with quiet():
         local("git branch %s%s" % (prefix, number))
         local("git checkout %s%s" % (prefix, number))
         print(cyan("Changed to %s." % get_branch_name()))
 
     if confirm(green("Do you want to reset current branch?")):
-        reset()
+        reset(base=base)
         print(cyan("Got last changes from %s." % GIT_REMOTE_NAME))
 
 
