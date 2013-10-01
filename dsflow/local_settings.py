@@ -1,25 +1,36 @@
 import os
-import ConfigParser
-
-user_dir = os.path.expanduser('~')
-config_file = os.path.join(user_dir, '.flow')
+from ConfigParser import ConfigParser
 
 
-class ConfigurationException(Exception):
-    pass
+class FlowHandler(object):
+    def __init__(self, conf_filename=".flow"):
+        self.conf_filename = conf_filename
+
+    def get_filenames(self, path):
+        path_list = []
+
+        while True:
+            path_list.insert(0, os.path.join(path, self.conf_filename))
+            newpath = os.path.dirname(path)
+            if path == newpath:
+                break
+            path = newpath
+
+        if not len(path_list):
+            raise Exception('Please, create %s config file with required credentials' % self.conf_filename)
+
+        return path_list
+
+    def get_configurations(self):
+        conf_files = self.get_filenames(os.getcwd())
+        parser = ConfigParser()
+        parser.read(conf_files)
+
+        return parser
 
 
-def get_config_files():
-    env_config_file = os.environ.get('FLOW_CONFIG_FILE', False)
-    if env_config_file:
-        return [env_config_file]
-    if os.path.exists(config_file):
-        return [config_file]
-    else:
-        raise ConfigurationException('Please, create ~/.flow config file with required credentials')
-
-config = ConfigParser.ConfigParser()
-config.read(get_config_files())
+parser = FlowHandler()
+config = parser.get_configurations()
 
 GITHUB_USER = config.get('global', 'GITHUB_USER')
 GITHUB_PASS = config.get('global', 'GITHUB_PASS')
