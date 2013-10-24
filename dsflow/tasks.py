@@ -6,7 +6,7 @@ from fabric.api import local, prompt, task, quiet
 from fabric.colors import green, cyan, red
 from fabric.contrib.console import confirm
 
-from settings import GITHUB, UPSTREAM_ONLY, TASK_PREFIX, GIT_REMOTE_NAME
+from settings import GITHUB, UPSTREAM_ONLY, TASK_PREFIX, GIT_REMOTE_NAME, GIT_DEFAULT_BASE
 from utils import get_commit_message, get_branch_name, post
 
 
@@ -50,7 +50,7 @@ def commit(message=None, amend=False, add_first=False):
 
 
 @task
-def push(force=False, need_rebase=False, base="master"):
+def push(force=False, need_rebase=False, base=GIT_DEFAULT_BASE):
     if need_rebase:
         rebase()
 
@@ -71,7 +71,7 @@ def push(force=False, need_rebase=False, base="master"):
 
 
 @task(alias='pr')
-def pull_request(message=None, base="master"):
+def pull_request(message=None, base=GIT_DEFAULT_BASE):
     print(cyan("Sending pull request..."))
 
     if confirm(green('Default message: %s' % get_commit_message(message=message))):
@@ -92,13 +92,13 @@ def pull_request(message=None, base="master"):
 
 
 @task
-def reset(base="master"):
+def reset(base=GIT_DEFAULT_BASE):
     local("git fetch %s" % GIT_REMOTE_NAME)
     local("git reset --hard %s/%s" % (GIT_REMOTE_NAME, base))
 
 
 @task
-def rebase(base="master"):
+def rebase(base=GIT_DEFAULT_BASE):
     print(cyan("Rebasing..."))
     local("git fetch %s" % GIT_REMOTE_NAME)
     local("git rebase %s/%s" % (GIT_REMOTE_NAME, base))
@@ -106,7 +106,7 @@ def rebase(base="master"):
 
 
 @task
-def change(number, prefix=TASK_PREFIX, base="master"):
+def change(number, prefix=TASK_PREFIX, base=GIT_DEFAULT_BASE):
     with quiet():
         local("git branch %s%s" % (prefix, number))
         local("git checkout %s%s" % (prefix, number))
@@ -118,7 +118,7 @@ def change(number, prefix=TASK_PREFIX, base="master"):
 
 
 @task
-def finish(message=None, force=False, need_rebase=False, add_first=False, base="master"):
+def finish(message=None, force=False, need_rebase=False, add_first=False, base=GIT_DEFAULT_BASE):
     commit(message=message, add_first=add_first)
 
     push(force=force, need_rebase=False, base=base)
