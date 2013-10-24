@@ -121,7 +121,7 @@ def change(number, prefix=TASK_PREFIX, base="master"):
 def finish(message=None, force=False, need_rebase=False, add_first=False, base="master"):
     commit(message=message, add_first=add_first)
 
-    push(force=force, need_rebase=False)
+    push(force=force, need_rebase=False, base=base)
 
     if not UPSTREAM_ONLY:
         pull_request(message=message, base=base)
