@@ -24,19 +24,25 @@ class FlowHandler(object):
     def get_configurations(self):
         conf_files = self.get_filenames(os.getcwd())
         parser = ConfigParser()
+        parser.add_section('global')
+        parser.set('global', 'GIT_DEFAULT_BASE', 'master')
+        parser.set('global', 'GITHUB_PULL_REQUEST_URL', 'https://api.github.com/repos/django-stars/mmp/pulls')
+        parser.set('global', 'UPSTREAM_ONLY', False)
+        parser.set('global', 'GIT_REMOTE_NAME', 'upstream')
+        parser.set('global', 'GIT_REBASE_FIRST', False)
+        parser.set('global', 'GIT_ADD_FIRST', False)
         parser.read(conf_files)
 
         return parser
-
 
 parser = FlowHandler()
 config = parser.get_configurations()
 
 GITHUB_USER = config.get('global', 'GITHUB_USER')
 GITHUB_PASS = config.get('global', 'GITHUB_PASS')
-GIT_ADD_FIRST = config.getboolean('global', 'GIT_ADD_FIRST') or False
-GIT_REBASE_FIRST = config.getboolean('global', 'GIT_REBASE_FIRST') or False
-GIT_REMOTE_NAME = config.get('global', 'GIT_REMOTE_NAME') or "upstream"
-UPSTREAM_ONLY = config.getboolean('global', 'UPSTREAM_ONLY') or False
-GITHUB_PULL_REQUEST_URL = config.get('global', 'GITHUB_PULL_REQUEST_URL') or "https://api.github.com/repos/django-stars/mmp/pulls"
-GIT_DEFAULT_BASE = config.get('global', 'GIT_DEFAULT_BASE', 'master')
+GIT_ADD_FIRST = config.getboolean('global', 'GIT_ADD_FIRST')
+GIT_REBASE_FIRST = config.getboolean('global', 'GIT_REBASE_FIRST')
+GIT_REMOTE_NAME = config.get('global', 'GIT_REMOTE_NAME')
+UPSTREAM_ONLY = config.getboolean('global', 'UPSTREAM_ONLY')
+GITHUB_PULL_REQUEST_URL = config.get('global', 'GITHUB_PULL_REQUEST_URL')
+GIT_DEFAULT_BASE = config.get('global', 'GIT_DEFAULT_BASE')
