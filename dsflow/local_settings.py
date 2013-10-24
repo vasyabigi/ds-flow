@@ -39,4 +39,4 @@ GIT_REBASE_FIRST = config.getboolean('global', 'GIT_REBASE_FIRST') or False
 GIT_REMOTE_NAME = config.get('global', 'GIT_REMOTE_NAME') or "upstream"
 UPSTREAM_ONLY = config.getboolean('global', 'UPSTREAM_ONLY') or False
 GITHUB_PULL_REQUEST_URL = config.get('global', 'GITHUB_PULL_REQUEST_URL') or "https://api.github.com/repos/django-stars/mmp/pulls"
-GIT_DEFAULT_BASE = config.get('global', 'GIT_DEFAULT_BASE') or "master"
+GIT_DEFAULT_BASE = config.get('global', 'GIT_DEFAULT_BASE', 'master')
