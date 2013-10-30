@@ -33,6 +33,7 @@ class FlowHandler(object):
         parser.set('global', 'GIT_REMOTE_NAME', 'upstream')
         parser.set('global', 'GIT_DEFAULT_BASE', 'master')
         parser.set('global', 'GITHUB_PULL_REQUEST_URL', 'https://api.github.com/repos/django-stars/mmp/pulls')
+        parser.set('global', 'TASK_PREFIX', 'task-')
 
         parser.read(conf_files)
 
@@ -49,3 +50,4 @@ GIT_REMOTE_NAME = config.get('global', 'GIT_REMOTE_NAME')
 UPSTREAM_ONLY = config.getboolean('global', 'UPSTREAM_ONLY')
 GITHUB_PULL_REQUEST_URL = config.get('global', 'GITHUB_PULL_REQUEST_URL')
 GIT_DEFAULT_BASE = config.get('global', 'GIT_DEFAULT_BASE')
+TASK_PREFIX = config.get('global', 'TASK_PREFIX')

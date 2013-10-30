@@ -1,5 +1,3 @@
-TASK_PREFIX = "task-"
-
 from local_settings import *
 
 GITHUB = {
