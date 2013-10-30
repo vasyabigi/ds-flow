@@ -72,7 +72,7 @@ def push(force=False, need_rebase=False, base=GIT_DEFAULT_BASE):
 
 @task(alias='pr')
 def pull_request(message=None, base=GIT_DEFAULT_BASE):
-    print(cyan("Sending pull request..."))
+    print(cyan("Sending pull request to %s/%s." % (GIT_REMOTE_NAME, base)))
 
     if confirm(green('Default message: %s' % get_commit_message(message=message))):
         title = get_commit_message(message=message)
@@ -88,7 +88,7 @@ def pull_request(message=None, base=GIT_DEFAULT_BASE):
 
     response = post(url=GITHUB['urls']['pull_request'], data=json.dumps(data))
 
-    print(cyan(response) if response.status_code != 201 else cyan("Pull Request was sent."))
+    print(cyan(response) if response.status_code != 201 else cyan("Pull Request was sent to %s/%s." % (GIT_REMOTE_NAME, base)))
 
 
 @task
