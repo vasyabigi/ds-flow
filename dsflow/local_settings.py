@@ -24,13 +24,16 @@ class FlowHandler(object):
     def get_configurations(self):
         conf_files = self.get_filenames(os.getcwd())
         parser = ConfigParser()
+
+        # Defaults:
         parser.add_section('global')
+        parser.set('global', 'UPSTREAM_ONLY', False)
+        parser.set('global', 'GIT_ADD_FIRST', False)
+        parser.set('global', 'GIT_REBASE_FIRST', False)
+        parser.set('global', 'GIT_REMOTE_NAME', 'upstream')
         parser.set('global', 'GIT_DEFAULT_BASE', 'master')
         parser.set('global', 'GITHUB_PULL_REQUEST_URL', 'https://api.github.com/repos/django-stars/mmp/pulls')
-        parser.set('global', 'UPSTREAM_ONLY', False)
-        parser.set('global', 'GIT_REMOTE_NAME', 'upstream')
-        parser.set('global', 'GIT_REBASE_FIRST', False)
-        parser.set('global', 'GIT_ADD_FIRST', False)
+
         parser.read(conf_files)
 
         return parser

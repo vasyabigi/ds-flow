@@ -128,5 +128,5 @@ def finish(message=None, force=False, need_rebase=False, add_first=False, base=G
 
 
 @task
-def fix():
-    change(number="quick-fix", prefix="")
+def fix(base=GIT_DEFAULT_BASE):
+    change(number="quick-fix", prefix="", base=base)
