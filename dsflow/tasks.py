@@ -88,7 +88,14 @@ def pull_request(message=None, base=GIT_DEFAULT_BASE):
 
     response = post(url=GITHUB['urls']['pull_request'], data=json.dumps(data))
 
-    print(cyan(response) if response.status_code != 201 else cyan("Pull Request was sent to %s/%s." % (GIT_REMOTE_NAME, base)))
+    if response.status_code == 201:
+        print(cyan("Pull Request was sent to %s/%s." % (GIT_REMOTE_NAME, base)))
+
+    elif response.status_code == 422:
+        print(cyan("Pull-request was sent before."))
+
+    else:
+        print(response)
 
 
 @task
