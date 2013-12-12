@@ -1,12 +1,13 @@
 from __future__ import with_statement
 
 import json
+from datetime import datetime
 
 from fabric.api import local, prompt, task, quiet
 from fabric.colors import green, cyan, red
 from fabric.contrib.console import confirm
 
-from settings import GITHUB, UPSTREAM_ONLY, TASK_PREFIX, GIT_REMOTE_NAME, GIT_DEFAULT_BASE
+from settings import GITHUB, UPSTREAM_ONLY, BRANCH_FORMAT_STRING, GIT_REMOTE_NAME, GIT_DEFAULT_BASE
 from utils import get_commit_message, get_branch_name, post
 
 
@@ -57,7 +58,8 @@ def push(force=False, need_rebase=False, base=GIT_DEFAULT_BASE):
     print(cyan("Pushing..."))
 
     if UPSTREAM_ONLY:
-        command = 'git push %s %s:%s' % (GIT_REMOTE_NAME, get_branch_name(), base)
+        command = 'git push %s %s:%s' % (
+            GIT_REMOTE_NAME, get_branch_name(), base)
     else:
         command = 'git push origin %s' % get_branch_name()
 
@@ -113,10 +115,12 @@ def rebase(base=GIT_DEFAULT_BASE):
 
 
 @task
-def change(number, prefix=TASK_PREFIX, base=GIT_DEFAULT_BASE):
+def change(number, branch_format_string=BRANCH_FORMAT_STRING, base=GIT_DEFAULT_BASE):
     with quiet():
-        local("git branch %s%s" % (prefix, number))
-        local("git checkout %s%s" % (prefix, number))
+        branch_name = branch_format_string.format(
+            datetime=datetime.now(), branch_name=number)
+        local("git branch %s" % branch_name)
+        local("git checkout %s" % branch_name)
         print(cyan("Changed to %s." % get_branch_name()))
 
     if confirm(green("Do you want to reset current branch?")):

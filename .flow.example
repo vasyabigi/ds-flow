@@ -6,3 +6,4 @@ GIT_ADD_FIRST:True
 GIT_REBASE_FIRST:True
 GIT_REMOTE_NAME:upstream
 GITHUB_PULL_REQUEST_URL:https://api.github.com/repos/django-stars/<repo_name>/pulls
+BRANCH_FORMAT_STRING:Task-{branch_name}
